@@ -24,6 +24,7 @@ public class Main extends Application {
 			
 			// Add a grid pane to lay out the buttons and text fields.
 			GridPane grid = new GridPane();
+
 			grid.setAlignment(Pos.CENTER);
 			grid.setHgap(10);
 			grid.setVgap(10);
