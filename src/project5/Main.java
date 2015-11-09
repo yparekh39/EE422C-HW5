@@ -10,12 +10,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -24,24 +24,21 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			
 			primaryStage.setTitle("Java FX Critters");
-			Group root = new Group();
+			Group world = new Group();
+			Shape s = new Rectangle(800, 800);
+			s.setFill(Color.LIGHTBLUE);
+			s.setStroke(Color.BLACK);
+			s.setStrokeDashOffset(10);
+			s.setStrokeWidth(2);
+			world.getChildren().add(s);
 			// Add a grid pane to lay out the buttons and text fields.
 			GridPane grid = new GridPane();
-			GridPane world = new GridPane();
-			for(int i = 0; i < Params.world_height+1; i++) {
-				RowConstraints rowConstraints = new RowConstraints(); 
-				rowConstraints.setPercentHeight((1/Params.world_height)*100);
-				world.getRowConstraints().add(rowConstraints);
-			}
-			for (int i = 0; i < Params.world_width+1; i++) {
-				ColumnConstraints columnConstraints = new ColumnConstraints();
-				columnConstraints.setPercentWidth((1/Params.world_width)*100);
-				world.getColumnConstraints().add(columnConstraints);
-			}
-			world.setMinWidth(800);
-			world.setMinHeight(800);
-			grid.setAlignment(Pos.CENTER);
+			BorderPane window = new BorderPane();
+			window.setLeft(grid);
+			window.setCenter(world);
+			grid.setAlignment(Pos.CENTER_LEFT);
 			grid.setHgap(10);
 			grid.setVgap(10);
 			grid.setPadding(new Insets(25, 25, 25, 25));
@@ -75,15 +72,13 @@ public class Main extends Application {
 			final Text actionTarget = new Text();
 			row += 2;
 			grid.add(actionTarget, 1, row);
-			world.setLayoutY(25);
-			world.setLayoutX(400);
-			root.getChildren().add(grid);
-			root.getChildren().add(world);
-			grid.setGridLinesVisible(true);
-			world.setGridLinesVisible(true);
-			Scene scene = new Scene(root, 1000, 1500);
+			Scene scene = new Scene(window, 2000, 1000);
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
+			Label timeStep = new Label("Time Step:");
+			grid.add(timeStep, 0, row);
+			row++;
 			
 			// Action when add critters button is pressed. Call makeCritter.
 			// Uses something called an anonymous class of type EventHandler<ActionEvent>, which is a class that is
@@ -95,8 +90,8 @@ public class Main extends Application {
 					String numString = critNumField.getText();
 					//TODO: Call Critter.makeCritter as many times as requested.		
 					actionTarget.setFill(Color.FIREBRICK);
-					actionTarget.setText("TODO: message to display how many Critters added etc.");	
-					Critter.displayWorld(); // Optional
+					actionTarget.setText("Added " + numString + " " + name + " Critters.");	
+					//Critter.displayWorld(); // Optional
 				}			
 			});
 			
