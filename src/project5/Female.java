@@ -38,4 +38,10 @@ public class Female extends Critter {
 		System.out.println("There are " + females.size() + " females alive.");
 	}
 
+	@Override
+	public CritterShape viewShape() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

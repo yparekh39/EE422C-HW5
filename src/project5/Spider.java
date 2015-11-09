@@ -72,4 +72,11 @@ public class Spider extends Critter {
 		System.out.println("" + ageCount + " spiders are old and " + (spiders.size() - ageCount) + " are young." );
 	}
 
+
+	@Override
+	public CritterShape viewShape() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
