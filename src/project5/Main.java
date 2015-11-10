@@ -42,7 +42,6 @@ public class Main extends Application {
 		try {
 			
 			primaryStage.setTitle("Java FX Critters");
-
 			s = new Rectangle(worldWidthGUI, worldHeightGUI);
 			s.setFill(Color.LIGHTBLUE);
 			s.setStroke(Color.BLACK);
