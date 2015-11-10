@@ -33,8 +33,8 @@ public class Main extends Application {
 	static GridPane grid = new GridPane();
 	static BorderPane window = new BorderPane();
 	static int row = 0;
-	static int worldWidthGUI = 700;
-	static int worldHeightGUI = 700;
+	static int worldWidthGUI = 600;
+	static int worldHeightGUI = 600;
 	static Shape s;
 
 	@Override

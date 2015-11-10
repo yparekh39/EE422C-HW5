@@ -40,8 +40,9 @@ public class Female extends Critter {
 
 	@Override
 	public CritterShape viewShape() {
-		// TODO Auto-generated method stub
-		return null;
+		return CritterShape.CIRCLE;
 	}
+	public javafx.scene.paint.Color viewColor() { return javafx.scene.paint.Color.PINK; }
+
 
 }

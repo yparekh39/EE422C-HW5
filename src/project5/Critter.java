@@ -46,7 +46,7 @@ public abstract class Critter {
 	 * need to, but please preserve that intent as you implement them. 
 	 */
 	public javafx.scene.paint.Color viewColor() { 
-		return javafx.scene.paint.Color.WHITE; 
+		return javafx.scene.paint.Color.LIGHTBLUE; 
 	}
 	
 	public javafx.scene.paint.Color viewOutlineColor() { return viewColor(); }
@@ -55,6 +55,11 @@ public abstract class Critter {
 	public abstract CritterShape viewShape(); 
 	
 	protected String look(int direction, boolean steps) {
+		int spotsAway = steps ? 2:1;
+		
+		
+		
+		
 		return null;
 	}
 	
