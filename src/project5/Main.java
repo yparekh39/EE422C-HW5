@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -54,8 +55,8 @@ public class Main extends Application {
 			window.setLeft(grid);
 			window.setCenter(world);
 			grid.setAlignment(Pos.CENTER_LEFT);
-			grid.setHgap(10);
-			grid.setVgap(10);
+			grid.setHgap(5);
+			grid.setVgap(5);
 			grid.setPadding(new Insets(25, 25, 25, 25));
 			
 			
@@ -87,7 +88,7 @@ public class Main extends Application {
 			final Text actionTarget = new Text();
 			row += 2;
 			grid.add(actionTarget, 1, row);
-			Scene scene = new Scene(window, 1400, 900);
+			Scene scene = new Scene(window, 1400, 800);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
@@ -104,6 +105,14 @@ public class Main extends Application {
 			row += 2;
 			grid.add(hbStepBtn, 1, row);
 			
+			Button quitBtn = new Button("Quit");
+			HBox hbQuitBtn = new HBox(10);
+			hbQuitBtn.setAlignment(Pos.BOTTOM_CENTER);
+			hbQuitBtn.getChildren().add(quitBtn);
+			row += 2;
+			grid.add(hbQuitBtn, 0, row);
+			
+			//grid.setGridLinesVisible(true);
 			
 			updateStats();
 			
@@ -150,6 +159,14 @@ public class Main extends Application {
 					updateStats();
 				}
 			});
+			quitBtn.setOnAction(new EventHandler<ActionEvent>(){
+
+				@Override
+				public void handle(ActionEvent event) {
+					Platform.exit();
+				}
+				
+			});
 
 		} catch(Exception e) {
 			e.printStackTrace();		
@@ -186,7 +203,10 @@ public class Main extends Application {
 			stats.add(statText, 1, statsRow);
 			statsRow++;
 		}
-		stats.setAlignment(Pos.TOP_LEFT);
+		stats.setHgap(5);
+		stats.setVgap(5);
+		//stats.setGridLinesVisible(true);
+		stats.setAlignment(Pos.CENTER);
 		grid.setPadding(new Insets(25, 25, 25, 25));
 		window.setRight(stats);
 	}
