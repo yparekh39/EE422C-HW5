@@ -32,13 +32,17 @@ public class Main extends Application {
 	static GridPane grid = new GridPane();
 	static BorderPane window = new BorderPane();
 	static int row = 0;
+	static int worldWidthGUI = 200;
+	static int worldHeightGUI = 200;
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			
 			primaryStage.setTitle("Java FX Critters");
+
 			
-			Shape s = new Rectangle(800, 800);
+			Shape s = new Rectangle(worldWidthGUI, worldHeightGUI);
 			s.setFill(Color.LIGHTBLUE);
 			s.setStroke(Color.BLACK);
 			s.setStrokeDashOffset(10);
