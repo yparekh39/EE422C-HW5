@@ -1,5 +1,8 @@
 package project5;
 	
+import java.util.HashSet;
+import java.util.Set;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,7 +27,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			
+			Set<String> critterTypes = new HashSet<String>();
 			primaryStage.setTitle("Java FX Critters");
 			Group world = new Group();
 			Shape s = new Rectangle(800, 800);
@@ -76,9 +79,20 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-			Label timeStep = new Label("Time Step:");
-			grid.add(timeStep, 0, row);
+			Label timeStep = new Label("# of Time Steps:");
 			row++;
+			grid.add(timeStep, 0, row);
+			TextField timeField = new TextField();
+			grid.add(timeField, 1, row);
+			
+			Button stepBtn = new Button("Step");
+			HBox hbStepBtn = new HBox(10);
+			hbStepBtn.setAlignment(Pos.BOTTOM_LEFT);
+			hbStepBtn.getChildren().add(stepBtn);
+			row += 2;
+			grid.add(hbStepBtn, 1, row);
+			
+			
 			
 			// Action when add critters button is pressed. Call makeCritter.
 			// Uses something called an anonymous class of type EventHandler<ActionEvent>, which is a class that is
@@ -88,13 +102,38 @@ public class Main extends Application {
 				public void handle(ActionEvent event) {
 					String name = critNameField.getText();
 					String numString = critNumField.getText();
-					//TODO: Call Critter.makeCritter as many times as requested.		
-					actionTarget.setFill(Color.FIREBRICK);
-					actionTarget.setText("Added " + numString + " " + name + " Critters.");	
-					//Critter.displayWorld(); // Optional
+					//TODO: Call Critter.makeCritter as many times as requested.
+					String critterClassName = "project5."+ name;
+					int newCount = 1;
+					if(!numString.isEmpty()){ newCount = Integer.parseInt(numString); }
+					try{
+						for (int i = 0; i < newCount; i++) {
+							Critter.makeCritter(critterClassName);
+						}
+						critterTypes.add(critterClassName);
+						actionTarget.setFill(Color.FIREBRICK);
+						actionTarget.setText("Added " + Integer.toString(newCount) + " " + name + " Critters.");	
+						Critter.displayWorld(); // or Whatever
+					} catch(InvalidCritterException e) {
+						actionTarget.setFill(Color.FIREBRICK);
+						actionTarget.setText("Invalid Critter!");
+					}
+
 				}			
 			});
 			
+			stepBtn.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					String timeSteps = timeField.getText();
+					int timeStepsCount = 1;
+					if(!timeSteps.isEmpty()) { timeStepsCount = Integer.parseInt(timeSteps); } 
+					for(int i = 0; i < timeStepsCount; i++){
+						Critter.worldTimeStep();
+					}
+					Critter.displayWorld(); // or whatever
+				}
+			});
 
 		} catch(Exception e) {
 			e.printStackTrace();		
