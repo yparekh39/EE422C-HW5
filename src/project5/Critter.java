@@ -55,10 +55,65 @@ public abstract class Critter {
 	public abstract CritterShape viewShape(); 
 	
 	protected String look(int direction, boolean steps) {
+		this.energy -= Params.look_energy_cost;
+		int lookX = this.x_coord;
+		int lookY = this.y_coord;
 		int spotsAway = steps ? 2:1;
 		
+		for(int i = 1; i <= spotsAway; i++){
+			switch (direction) {
+				case 0:
+					lookX = (lookX+1) % Params.world_width;
+					break;
+				case 1:
+					lookX = (lookX+1) % Params.world_width;
+					lookY = (lookY-1) % Params.world_height;
+					if(lookY<0)
+						lookY = Params.world_height - 1;
+					break;
+				case 2:
+					lookY = (lookY-1) % Params.world_height;
+					if(lookY<0)
+						lookY = Params.world_height - 1;
+					break;
+				case 3:
+					lookY = (lookY-1) % Params.world_height;
+					if(lookY<0)
+						lookY = Params.world_height - 1;
+					
+					lookX = (lookX-1) % Params.world_width;
+					//wrap
+					if(lookX<0)
+						lookX = Params.world_width - 1;
+					break;
+				case 4:
+					lookX = (lookX-1) % Params.world_width;
+					//wrap
+					if(lookX<0)
+						lookX = Params.world_width - 1;
+					break;
+				case 5:
+					lookX = (lookX-1) % Params.world_width;
+					//wrap
+					if(lookX<0)
+						lookX = Params.world_width - 1;
+					lookY = (lookY+1) % Params.world_height;
+					break;
+				case 6:
+					lookY = (lookY+1) % Params.world_height;
+					break;
+				case 7:
+					lookX = (lookX+1) % Params.world_width;
+					lookY = (lookY+1) % Params.world_height;
+					break;
+			}
+		}
 		
-		
+		//search for a critter with matching coordinates
+		for(Critter occupier : population){
+			if(occupier.x_coord == lookX && occupier.y_coord == lookY)
+				return occupier.toString();
+		}
 		
 		return null;
 	}
