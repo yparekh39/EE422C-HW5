@@ -14,6 +14,7 @@ package project5;
 import java.util.List;
 
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
@@ -460,8 +461,13 @@ public abstract class Critter {
 			int radiusGUI = Main.worldWidthGUI/Params.world_width/2;
 			switch (c.viewShape()){
 				case SQUARE: 
-					if(xGUI < 0 || yGUI < 0)
-						System.out.println("GUI error " + xGUI + " " + yGUI);
+					s = new Rectangle(xGUI, yGUI, Main.worldWidthGUI/Params.world_width , Main.worldHeightGUI/Params.world_height);
+					break;
+				case TRIANGLE: 
+					//created in bottom left, top, bottom right order
+					s = new Polygon(xGUI, yGUI + 2*radiusGUI, xGUI + radiusGUI, yGUI, xGUI + 2*radiusGUI, yGUI + 2*radiusGUI);
+					break;
+				case DIAMOND: 
 					s = new Rectangle(xGUI, yGUI, Main.worldWidthGUI/Params.world_width , Main.worldHeightGUI/Params.world_height);
 					break;
 				default:
@@ -470,6 +476,7 @@ public abstract class Critter {
 			
 			}
 			s.setFill(c.viewColor());
+			s.setStroke(c.viewOutlineColor());
 			crittersAsShapes.add(s);
 		}
 		

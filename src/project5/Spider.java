@@ -74,9 +74,9 @@ public class Spider extends Critter {
 
 
 	@Override
-	public CritterShape viewShape() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public CritterShape viewShape(){ return CritterShape.TRIANGLE; }
+	
+	public javafx.scene.paint.Color viewColor() { return javafx.scene.paint.Color.BLACK; }
+	
 
 }

@@ -27,8 +27,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	static Group world = new Group();
-	static int worldWidthGUI = 200;
-	static int worldHeightGUI = 200;
+	static int worldWidthGUI = 600;
+	static int worldHeightGUI = 600;
+	static Shape backgroundGUI;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -38,10 +39,10 @@ public class Main extends Application {
 
 			
 			Shape s = new Rectangle(worldWidthGUI, worldHeightGUI);
-			s.setFill(Color.LIGHTBLUE);
-			s.setStroke(Color.BLACK);
-			s.setStrokeDashOffset(10);
-			s.setStrokeWidth(2);
+			backgroundGUI.setFill(Color.LIGHTBLUE);
+			backgroundGUI.setStroke(Color.BLACK);
+			backgroundGUI.setStrokeDashOffset(10);
+			backgroundGUI.setStrokeWidth(2);
 			world.getChildren().add(s);
 			// Add a grid pane to lay out the buttons and text fields.
 			GridPane grid = new GridPane();
@@ -152,8 +153,7 @@ public class Main extends Application {
 	}
 	
 	public static void displayWorldGUI(ArrayList<Shape> population){
-		for(int i = 0; i < population.size(); i++){
-			world.getChildren().add(population.get(i));
-		}
+		world.getChildren().add(backgroundGUI);
+		world.getChildren().setAll(population);
 	}
 }
