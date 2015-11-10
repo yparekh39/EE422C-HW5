@@ -1,5 +1,8 @@
 package project5;
 	
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,12 +24,13 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
+	static Group world = new Group();
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			
 			primaryStage.setTitle("Java FX Critters");
-			Group world = new Group();
+			
 			Shape s = new Rectangle(800, 800);
 			s.setFill(Color.LIGHTBLUE);
 			s.setStroke(Color.BLACK);
@@ -95,6 +99,9 @@ public class Main extends Application {
 				}			
 			});
 			
+			/*Matt's stuff*/
+			Critter.displayWorld();
+			
 
 		} catch(Exception e) {
 			e.printStackTrace();		
@@ -103,5 +110,11 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	public static void displayWorldGUI(ArrayList<Shape> population){
+		for(int i = 0; i < population.size(); i++){
+			world.getChildren().add(population.get(i));
+		}
 	}
 }

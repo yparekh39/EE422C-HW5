@@ -12,8 +12,14 @@ package project5;
  */
 
 import java.util.List;
+
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -424,8 +430,48 @@ public abstract class Critter {
 			
 			
 	}//end of worldTimeStep
-
 	
+	/**
+	 * NEW DISPLAY WORLD FUNCTION
+	 */
+	public static void displayWorld() throws InvalidCritterException{
+		List<Shape> crittersAsShapes = new ArrayList<Shape>();
+		
+		/*Create test critters for displaying*/
+		Critter newCritter = new Craig();
+		newCritter.energy = Params.start_energy;
+		newCritter.x_coord = rand.nextInt(Params.world_width);
+		newCritter.y_coord = rand.nextInt(Params.world_height);
+		population.add(newCritter);
+
+		
+
+		
+		Iterator<Critter> iterator = population.iterator();
+		while(iterator.hasNext()) {
+			Critter c = iterator.next();
+			Shape s;
+			switch (c.viewShape()){
+				case SQUARE: 
+					s = new Rectangle(c.x_coord, c.y_coord, Params.world_width/10, Params.world_width/10);
+					break;
+				default:
+					s = new Circle(c.x_coord, c.y_coord, 50);
+					break;
+			
+			}
+			crittersAsShapes.add(s);
+		}
+		
+		
+		Main.displayWorldGUI((ArrayList)crittersAsShapes);
+				
+	}
+	
+	
+	/**
+	 * OLD DISPLAY WORLD FUNCTION
+	 *//*
 	public static void displayWorld() {
 		//Builds outer grid
 		char[][] world = new char[Params.world_width+2][Params.world_height+2];
@@ -464,5 +510,5 @@ public abstract class Critter {
 			}
 			System.out.println();
 		}
-	}
+	}*/
 }
