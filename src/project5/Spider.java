@@ -13,13 +13,11 @@ package project5;
 
 public class Spider extends Critter {
 	private int lastDir;
-	private boolean movedLastStep;
 	private int age;
 	private String ageAppearance;
 	
 	public Spider(){
 		lastDir = 0;
-		movedLastStep = false;
 		age = 0;
 		ageAppearance = "X";
 	}
@@ -30,15 +28,10 @@ public class Spider extends Critter {
 		//if a newborn, offset 2 to the right
 		if(age == 0)
 			run(lastDir);
+		
+		lastDir = (lastDir + 2) %8;
+		walk(lastDir);
 
-		//if it moved last step, sit still this step
-		//movement pattern is a square that reminds me of a web (though not a spiral that changes size)
-		if(!movedLastStep){
-			lastDir = (lastDir + 2) %8;
-			walk(lastDir);
-		}
-		else
-			movedLastStep = false;
 		
 		//reproduce every 4 steps
 		if(age % 20 == 0){
@@ -74,7 +67,7 @@ public class Spider extends Critter {
 
 
 	@Override
-	public CritterShape viewShape(){ return CritterShape.TRIANGLE; }
+	public CritterShape viewShape(){ return CritterShape.STAR; }
 	
 	public javafx.scene.paint.Color viewColor() { return javafx.scene.paint.Color.BLACK; }
 	
