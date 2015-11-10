@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -27,10 +28,14 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	static Group world = new Group();
+	static Set<String> critterTypes = new HashSet<String>();
+	static GridPane grid = new GridPane();
+	static BorderPane window = new BorderPane();
+	static int row = 0;
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Set<String> critterTypes = new HashSet<String>();
+			
 			primaryStage.setTitle("Java FX Critters");
 			
 			Shape s = new Rectangle(800, 800);
@@ -40,8 +45,8 @@ public class Main extends Application {
 			s.setStrokeWidth(2);
 			world.getChildren().add(s);
 			// Add a grid pane to lay out the buttons and text fields.
-			GridPane grid = new GridPane();
-			BorderPane window = new BorderPane();
+
+
 			window.setLeft(grid);
 			window.setCenter(world);
 			grid.setAlignment(Pos.CENTER_LEFT);
@@ -49,7 +54,7 @@ public class Main extends Application {
 			grid.setVgap(10);
 			grid.setPadding(new Insets(25, 25, 25, 25));
 			
-			int row = 0;
+			
 			
 			// Add Field for Critter type.
 			Label critName = new Label("Critter Name (e.g. Algae):");
@@ -78,7 +83,7 @@ public class Main extends Application {
 			final Text actionTarget = new Text();
 			row += 2;
 			grid.add(actionTarget, 1, row);
-			Scene scene = new Scene(window, 2000, 1000);
+			Scene scene = new Scene(window, 1400, 900);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
@@ -96,6 +101,7 @@ public class Main extends Application {
 			grid.add(hbStepBtn, 1, row);
 			
 			
+			updateStats();
 			
 			// Action when add critters button is pressed. Call makeCritter.
 			// Uses something called an anonymous class of type EventHandler<ActionEvent>, which is a class that is
@@ -113,10 +119,12 @@ public class Main extends Application {
 						for (int i = 0; i < newCount; i++) {
 							Critter.makeCritter(critterClassName);
 						}
-						critterTypes.add(critterClassName);
+						critterTypes.add(name);
 						actionTarget.setFill(Color.FIREBRICK);
 						actionTarget.setText("Added " + Integer.toString(newCount) + " " + name + " Critters.");	
 						Critter.displayWorld(); // or Whatever
+						updateStats();
+						
 					} catch(InvalidCritterException e) {
 						actionTarget.setFill(Color.FIREBRICK);
 						actionTarget.setText("Invalid Critter!");
@@ -124,7 +132,6 @@ public class Main extends Application {
 
 				}			
 			});
-			
 			stepBtn.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
@@ -134,7 +141,9 @@ public class Main extends Application {
 					for(int i = 0; i < timeStepsCount; i++){
 						Critter.worldTimeStep();
 					}
+					critterTypes.add("Algae");
 					Critter.displayWorld(); // or whatever
+					updateStats();
 				}
 			});
 
@@ -152,4 +161,33 @@ public class Main extends Application {
 			world.getChildren().add(population.get(i));
 		}
 	}
+	
+	public static void updateStats() {
+		GridPane stats = new GridPane();
+		int statsRow = 0;
+		Text title = new Text("Stats:");
+		title.setFill(Color.DARKBLUE);
+		stats.add(title, 0, statsRow);
+		statsRow++;
+		Iterator<String> iterator = critterTypes.iterator();
+		while(iterator.hasNext()) {
+			String stat;
+			int critterCount = 0;
+			String critter = iterator.next();
+			try {
+				critterCount = Critter.getInstances("project5." + critter).size();
+			} catch (InvalidCritterException e) {
+				e.printStackTrace();
+			}
+			stat = critterCount + " " + critter + " Critters";
+			Text statText = new Text("  " + stat);
+			stats.add(statText, 1, statsRow);
+			statsRow++;
+		}
+		stats.setAlignment(Pos.TOP_LEFT);
+		stats.setGridLinesVisible(true);
+		grid.setPadding(new Insets(25, 25, 25, 25));
+		window.setRight(stats);
+	}
+
 }
