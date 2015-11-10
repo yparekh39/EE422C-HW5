@@ -468,7 +468,20 @@ public abstract class Critter {
 					s = new Polygon(xGUI, yGUI + 2*radiusGUI, xGUI + radiusGUI, yGUI, xGUI + 2*radiusGUI, yGUI + 2*radiusGUI);
 					break;
 				case DIAMOND: 
-					s = new Rectangle(xGUI, yGUI, Main.worldWidthGUI/Params.world_width , Main.worldHeightGUI/Params.world_height);
+					//created left, top, right, bottom
+					s = new Polygon(xGUI, yGUI + radiusGUI, xGUI + radiusGUI, yGUI, xGUI + 2*radiusGUI, yGUI + radiusGUI, xGUI + radiusGUI, yGUI + 2*radiusGUI);
+					break;
+				case STAR:
+					s = new Polygon(xGUI, 					yGUI + .8*radiusGUI,
+									xGUI + .7*radiusGUI, 	yGUI + .8*radiusGUI, 
+									xGUI + radiusGUI, 		yGUI, 
+									xGUI + 1.3*radiusGUI,	yGUI + .8*radiusGUI,
+									xGUI + 2*radiusGUI, 	yGUI + .8*radiusGUI,
+									xGUI + 1.4*radiusGUI, 	yGUI + 1.3*radiusGUI,
+									xGUI + 1.6*radiusGUI, 	yGUI + 2*radiusGUI,
+									xGUI + radiusGUI, 		yGUI + 1.6*radiusGUI,
+									xGUI + .4*radiusGUI, 	yGUI + 2*radiusGUI,
+									xGUI + .6*radiusGUI,	yGUI + 1.3*radiusGUI);
 					break;
 				default:
 					s = new Circle(xGUI + radiusGUI, yGUI + radiusGUI, radiusGUI);
