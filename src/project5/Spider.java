@@ -14,31 +14,40 @@ package project5;
 public class Spider extends Critter {
 	private int lastDir;
 	private int age;
+	private int webLength;
+	private int webLengthWalked;
+	private int webPerimeterWalked;
 	private String ageAppearance;
 	
 	public Spider(){
 		lastDir = 0;
 		age = 0;
+		webLength = 1;
+		webLengthWalked = 0;
+		webPerimeterWalked = 0;
 		ageAppearance = "X";
 	}
 	
 	
 	@Override
 	public void doTimeStep() {
-		//if a newborn, offset 2 to the right
-		if(age == 0)
-			run(lastDir);
+		//GOAL: WALK IN INCREASING SQUARE SPIRAL PATTERN
 		
-		lastDir = (lastDir + 2) %8;
-		walk(lastDir);
-
-		
-		//reproduce every 4 steps
-		if(age % 20 == 0){
-			Critter offspring = new Spider();
-			this.reproduce(offspring, 0);
+		//if entire square walked, increase length of square legs and go again
+		if(webPerimeterWalked == webLength * 4){
+			webLength++;
+			webPerimeterWalked = 0;
 		}
-		
+			
+		//if length of square leg has been walked in current direction, change direction
+		if(webLengthWalked == webLength){
+			lastDir = (lastDir + 2) % 8;
+			webLengthWalked = 0;
+		}
+		//walk, make note that we've walked one more unit of the leg
+		walk(lastDir);
+		webLengthWalked++;
+		webPerimeterWalked++;
 		
 		age++;
 	}
