@@ -94,33 +94,34 @@ public abstract class Critter {
 				this.x_coord = (x_coord+1) % Params.world_width;
 				this.y_coord = (y_coord-1) % Params.world_height;
 				if(y_coord<0)
-					y_coord += Params.world_height;
+					y_coord = Params.world_height - 1;
 				break;
 			case 2:
 				this.y_coord = (y_coord-1) % Params.world_height;
 				if(y_coord<0)
-					y_coord += Params.world_height;
+					y_coord = Params.world_height - 1;
 				break;
 			case 3:
 				this.y_coord = (y_coord-1) % Params.world_height;
 				if(y_coord<0)
-					y_coord += Params.world_height;
+					y_coord = Params.world_height - 1;
+				
 				this.x_coord = (x_coord-1) % Params.world_width;
 				//wrap
 				if(x_coord<0)
-					x_coord += Params.world_width;
+					x_coord = Params.world_width - 1;
 				break;
 			case 4:
 				this.x_coord = (x_coord-1) % Params.world_width;
 				//wrap
 				if(x_coord<0)
-					x_coord += Params.world_width;
+					x_coord = Params.world_width - 1;
 				break;
 			case 5:
 				this.x_coord = (x_coord-1) % Params.world_width;
 				//wrap
 				if(x_coord<0)
-					x_coord += Params.world_width;
+					x_coord = Params.world_width - 1;
 				this.y_coord = (y_coord+1) % Params.world_height;
 				break;
 			case 6:
@@ -132,6 +133,10 @@ public abstract class Critter {
 				break;
 		}
 		hasMoved = true;
+		
+		/*Matt Debug Critters outside of window*/
+		if(this.x_coord < 0 || this.y_coord<0)
+			System.out.println("Walk outside world " + this.x_coord + " " + this.y_coord);
 	}
 	
 	protected final void run(int direction) {
@@ -146,6 +151,10 @@ public abstract class Critter {
 		this.energy += (2*Params.walk_energy_cost);
 		this.energy -= Params.run_energy_cost;
 		hasMoved = true;
+		
+		/*Matt Debug Critters outside of window*/
+		if(this.x_coord < 0 || this.y_coord<0)
+			System.out.println("Run outside world " + this.x_coord + " " + this.y_coord);
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
@@ -162,32 +171,32 @@ public abstract class Critter {
 			case 1:
 				offspring.x_coord = (x_coord+1) % Params.world_width;
 				offspring.y_coord = (y_coord-1) % Params.world_height;
-				if(y_coord<0)
-					offspring.y_coord += Params.world_height;
+				if(offspring.y_coord<0)
+					offspring.y_coord = Params.world_height - 1;
 				break;
 			case 2:
 				offspring.y_coord = (y_coord-1) % Params.world_height;
-				if(y_coord<0)
-					offspring.y_coord += Params.world_height;
+				if(offspring.y_coord<0)
+					offspring.y_coord = Params.world_height - 1;
 				break;
 			case 3:
 				offspring.y_coord = (y_coord-1) % Params.world_height;
 				offspring.x_coord = (x_coord-1) % Params.world_width;
-				if(y_coord<0)
-					offspring.y_coord += Params.world_height;
-				if(x_coord<0)
-					offspring.x_coord += Params.world_width;
+				if(offspring.y_coord<0)
+					offspring.y_coord = Params.world_height - 1;
+				if(offspring.x_coord<0)
+					offspring.x_coord = Params.world_width - 1;
 				break;
 			case 4:
 				offspring.x_coord = (x_coord-1) % Params.world_width;
-				if(x_coord<0)
-					offspring.x_coord += Params.world_width;
+				if(offspring.x_coord<0)
+					offspring.x_coord = Params.world_width - 1;
 				break;
 			case 5:
 				offspring.x_coord = (x_coord-1) % Params.world_width;
 				offspring.y_coord = (y_coord+1) % Params.world_height;
-				if(x_coord<0)
-					offspring.x_coord += Params.world_width;
+				if(offspring.x_coord<0)
+					offspring.x_coord = Params.world_width - 1;
 				break;
 			case 6:
 				offspring.y_coord = (y_coord+1) % Params.world_height;
@@ -198,6 +207,9 @@ public abstract class Critter {
 				break;
 		}
 		babies.add(offspring);
+		/*Matt Debug Critters outside of window*/
+		if(offspring.x_coord < 0 || offspring.y_coord<0)
+			System.out.println("Baby created outside world " + offspring.x_coord + " " + offspring.y_coord + " " + direction);
 	}
 
 	public abstract void doTimeStep();
@@ -441,15 +453,23 @@ public abstract class Critter {
 		while(iterator.hasNext()) {
 			Critter c = iterator.next();
 			Shape s;
+			if(c.x_coord < 0 || c.y_coord < 0)
+				System.out.println("coord error " + c.x_coord + " " + c.y_coord);
+			int xGUI = c.x_coord * (Main.worldWidthGUI/Params.world_width);
+			int yGUI = c.y_coord * (Main.worldHeightGUI/Params.world_height);
+			int radiusGUI = Main.worldWidthGUI/Params.world_width/2;
 			switch (c.viewShape()){
 				case SQUARE: 
-					s = new Rectangle(c.x_coord, c.y_coord, Params.world_width/10, Params.world_width/10);
+					if(xGUI < 0 || yGUI < 0)
+						System.out.println("GUI error " + xGUI + " " + yGUI);
+					s = new Rectangle(xGUI, yGUI, Main.worldWidthGUI/Params.world_width , Main.worldHeightGUI/Params.world_height);
 					break;
 				default:
-					s = new Circle(c.x_coord, c.y_coord, 50);
+					s = new Circle(xGUI + radiusGUI, yGUI + radiusGUI, radiusGUI);
 					break;
 			
 			}
+			s.setFill(c.viewColor());
 			crittersAsShapes.add(s);
 		}
 		

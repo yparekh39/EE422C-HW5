@@ -27,13 +27,17 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	static Group world = new Group();
+	static int worldWidthGUI = 200;
+	static int worldHeightGUI = 200;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			Set<String> critterTypes = new HashSet<String>();
 			primaryStage.setTitle("Java FX Critters");
+
 			
-			Shape s = new Rectangle(800, 800);
+			Shape s = new Rectangle(worldWidthGUI, worldHeightGUI);
 			s.setFill(Color.LIGHTBLUE);
 			s.setStroke(Color.BLACK);
 			s.setStrokeDashOffset(10);
