@@ -434,19 +434,9 @@ public abstract class Critter {
 	/**
 	 * NEW DISPLAY WORLD FUNCTION
 	 */
-	public static void displayWorld() throws InvalidCritterException{
+	public static void displayWorld(){
 		List<Shape> crittersAsShapes = new ArrayList<Shape>();
-		
-		/*Create test critters for displaying*/
-		Critter newCritter = new Craig();
-		newCritter.energy = Params.start_energy;
-		newCritter.x_coord = rand.nextInt(Params.world_width);
-		newCritter.y_coord = rand.nextInt(Params.world_height);
-		population.add(newCritter);
-
-		
-
-		
+			
 		Iterator<Critter> iterator = population.iterator();
 		while(iterator.hasNext()) {
 			Critter c = iterator.next();
