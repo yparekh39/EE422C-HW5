@@ -206,8 +206,8 @@ public class Main extends Application {
 		stats.setHgap(5);
 		stats.setVgap(5);
 		//stats.setGridLinesVisible(true);
-		stats.setAlignment(Pos.CENTER);
-		grid.setPadding(new Insets(25, 25, 25, 25));
+		stats.setAlignment(Pos.CENTER_LEFT);
+		stats.setPadding(new Insets(25, 25, 25, 25));
 		window.setRight(stats);
 	}
 
