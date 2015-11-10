@@ -33,8 +33,8 @@ public class Main extends Application {
 	static GridPane grid = new GridPane();
 	static BorderPane window = new BorderPane();
 	static int row = 0;
-	static int worldWidthGUI = 700;
-	static int worldHeightGUI = 700;
+	static int worldWidthGUI = 600;
+	static int worldHeightGUI = 600;
 	static Shape s;
 
 	@Override
@@ -57,6 +57,7 @@ public class Main extends Application {
 			grid.setAlignment(Pos.CENTER_LEFT);
 			grid.setHgap(5);
 			grid.setVgap(5);
+			grid.setPrefWidth(400);
 			grid.setPadding(new Insets(25, 25, 25, 25));
 			
 			
@@ -200,7 +201,7 @@ public class Main extends Application {
 			}
 			stat = critterCount + " " + critter + " Critters";
 			Text statText = new Text("  " + stat);
-			stats.add(statText, 1, statsRow);
+			stats.add(statText, 0, statsRow);
 			statsRow++;
 		}
 		stats.setHgap(5);
@@ -208,6 +209,7 @@ public class Main extends Application {
 		//stats.setGridLinesVisible(true);
 		stats.setAlignment(Pos.CENTER_LEFT);
 		stats.setPadding(new Insets(25, 25, 25, 25));
+		stats.setPrefWidth(300);
 		window.setRight(stats);
 	}
 
