@@ -32,8 +32,9 @@ public class Main extends Application {
 	static GridPane grid = new GridPane();
 	static BorderPane window = new BorderPane();
 	static int row = 0;
-	static int worldWidthGUI = 200;
-	static int worldHeightGUI = 200;
+	static int worldWidthGUI = 700;
+	static int worldHeightGUI = 700;
+	static Shape s;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -41,13 +42,13 @@ public class Main extends Application {
 			
 			primaryStage.setTitle("Java FX Critters");
 
-			
-			Shape s = new Rectangle(worldWidthGUI, worldHeightGUI);
+			s = new Rectangle(worldWidthGUI, worldHeightGUI);
 			s.setFill(Color.LIGHTBLUE);
 			s.setStroke(Color.BLACK);
 			s.setStrokeDashOffset(10);
 			s.setStrokeWidth(2);
 			world.getChildren().add(s);
+			
 			// Add a grid pane to lay out the buttons and text fields.
 
 
@@ -161,16 +162,14 @@ public class Main extends Application {
 	}
 	
 	public static void displayWorldGUI(ArrayList<Shape> population){
-		for(int i = 0; i < population.size(); i++){
-			world.getChildren().add(population.get(i));
-		}
+			population.add(0, s);
+			world.getChildren().setAll(population);
 	}
 	
 	public static void updateStats() {
 		GridPane stats = new GridPane();
 		int statsRow = 0;
 		Text title = new Text("Stats:");
-		title.setFill(Color.DARKBLUE);
 		stats.add(title, 0, statsRow);
 		statsRow++;
 		Iterator<String> iterator = critterTypes.iterator();
@@ -189,7 +188,6 @@ public class Main extends Application {
 			statsRow++;
 		}
 		stats.setAlignment(Pos.TOP_LEFT);
-		stats.setGridLinesVisible(true);
 		grid.setPadding(new Insets(25, 25, 25, 25));
 		window.setRight(stats);
 	}
