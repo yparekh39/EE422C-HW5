@@ -13,5 +13,7 @@ public class Params {
 	public static int start_energy = 100;
 	
 	public static int look_energy_cost = 1;
+	
+	/* Matt's Critter size parameter*/
 
 }

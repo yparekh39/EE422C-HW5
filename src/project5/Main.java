@@ -1,8 +1,10 @@
 package project5;
 	
+
 import java.util.HashSet;
 import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.Iterator;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,12 +26,13 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
+	static Group world = new Group();
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			Set<String> critterTypes = new HashSet<String>();
 			primaryStage.setTitle("Java FX Critters");
-			Group world = new Group();
+			
 			Shape s = new Rectangle(800, 800);
 			s.setFill(Color.LIGHTBLUE);
 			s.setStroke(Color.BLACK);
@@ -142,5 +145,11 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	public static void displayWorldGUI(ArrayList<Shape> population){
+		for(int i = 0; i < population.size(); i++){
+			world.getChildren().add(population.get(i));
+		}
 	}
 }
