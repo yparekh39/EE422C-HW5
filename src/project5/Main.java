@@ -3,6 +3,7 @@ package project5;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javafx.application.Application;
@@ -107,11 +108,19 @@ public class Main extends Application {
 			grid.add(hbStepBtn, 1, row);
 			
 			Button quitBtn = new Button("Quit");
+			quitBtn.setPrefWidth(70);
 			HBox hbQuitBtn = new HBox(10);
-			hbQuitBtn.setAlignment(Pos.BOTTOM_CENTER);
+			hbQuitBtn.setAlignment(Pos.BOTTOM_RIGHT);
 			hbQuitBtn.getChildren().add(quitBtn);
-			row += 2;
+			row += 8;
 			grid.add(hbQuitBtn, 0, row);
+			
+			Button resetButton = new Button("Clear");
+			resetButton.setPrefWidth(70);
+			HBox hbResetBtn = new HBox(10);
+			hbResetBtn.setAlignment(Pos.BOTTOM_LEFT);
+			hbResetBtn.getChildren().add(resetButton);
+			grid.add(hbResetBtn, 1, row);
 			
 			//grid.setGridLinesVisible(true);
 			
@@ -168,6 +177,18 @@ public class Main extends Application {
 				}
 				
 			});
+			
+			resetButton.setOnAction(new EventHandler<ActionEvent>(){
+
+				@Override
+				public void handle(ActionEvent event) {
+					// TODO Auto-generated method stub
+					Critter.clear();
+					Critter.displayWorld();
+					updateStats();
+				}
+				
+			});
 
 		} catch(Exception e) {
 			e.printStackTrace();		
@@ -187,6 +208,8 @@ public class Main extends Application {
 		GridPane stats = new GridPane();
 		int statsRow = 0;
 		Text title = new Text("Stats:");
+		title.setUnderline(true);
+		title.setFill(Color.FIREBRICK);
 		stats.add(title, 0, statsRow);
 		statsRow++;
 		Iterator<String> iterator = critterTypes.iterator();

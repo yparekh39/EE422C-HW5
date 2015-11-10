@@ -19,6 +19,7 @@ public class Longhorn extends Critter {
 	
 	public Longhorn(){
 		int isBevo = getRandomInt(10);
+		identity = "";
 		if(isBevo == 9)
 			identity = "I am Bevo";
 		lastDir = 0;
@@ -36,7 +37,7 @@ public class Longhorn extends Critter {
 		
 		walk(lastDir);
 		//there can only be one! or a few...
-		if(identity != "I am Bevo"){
+		if(!identity.equals("I am Bevo")){
 			if(age == 20 || age == 40){
 				Longhorn offspring = new Longhorn();
 				//reproduce(offspring, 0);
@@ -51,13 +52,13 @@ public class Longhorn extends Critter {
 	//Bevo never runs from a fight
 	@Override
 	public boolean fight(String oponent) {
-		if(identity == "I am Bevo")
+		if(identity.equals("I am Bevo"))
 			return true;
 		return false;
 	}
 	
 	public String toString(){
-		if(identity == "I am Bevo")
+		if(identity.equals("I am Bevo"))
 			return "B";
 		else
 			return "L";
@@ -68,7 +69,7 @@ public class Longhorn extends Critter {
 		
 		for(Critter c: longhorns){
 			Longhorn current = (Longhorn) c;
-			if(current.identity == "I am Bevo")
+			if(current.identity.equals("I am Bevo"))
 			System.out.println("At least one of them is Bevo-worthy!");
 		}		
 	}
@@ -78,7 +79,12 @@ public class Longhorn extends Critter {
 		return CritterShape.DIAMOND;
 	}
 	
-	public javafx.scene.paint.Color viewColor() { return javafx.scene.paint.Color.ORANGE; }
+	public javafx.scene.paint.Color viewColor() { 
+		if(identity.equals("I am Bevo")){
+		   return javafx.scene.paint.Color.ORANGE;
+		}
+		return javafx.scene.paint.Color.BROWN;
+	}
 
 
 }

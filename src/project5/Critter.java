@@ -558,7 +558,9 @@ public abstract class Critter {
 				
 	}
 	
-	
+	public static void clear() {
+		population.clear();
+	}
 	/**
 	 * OLD DISPLAY WORLD FUNCTION
 	 *//*

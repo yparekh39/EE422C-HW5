@@ -18,7 +18,7 @@ public class Female extends Critter {
 	@Override
 	public void doTimeStep() {
 		// TODO Auto-generated method stub
-
+		walk(Critter.getRandomInt(8));
 	}
 
 	@Override
