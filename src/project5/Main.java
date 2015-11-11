@@ -39,12 +39,11 @@ public class Main extends Application {
 	static int worldWidthGUI = 600;
 	static int worldHeightGUI = 600;
 	static Shape s;
-	static boolean stopTimers = false;
+	static boolean stopTimers = true;
 	static boolean stopFast = false;
 	static boolean stopSlow = false;
 	Animator fast_animator;
 	Animator slow_animator;
-	static boolean doingSettings = true;
 
 
 	@Override
@@ -232,27 +231,28 @@ public class Main extends Application {
 			addBtn.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
-					String name = critNameField.getText();
-					String numString = critNumField.getText();
-					//TODO: Call Critter.makeCritter as many times as requested.
-					String critterClassName = "project5."+ name;
-					int newCount = 1;
-					if(!numString.isEmpty()){ newCount = Integer.parseInt(numString); }
-					try{
-						for (int i = 0; i < newCount; i++) {
-							Critter.makeCritter(critterClassName);
+					if(stopTimers){
+						String name = critNameField.getText();
+						String numString = critNumField.getText();
+						//TODO: Call Critter.makeCritter as many times as requested.
+						String critterClassName = "project5."+ name;
+						int newCount = 1;
+						if(!numString.isEmpty()){ newCount = Integer.parseInt(numString); }
+						try{
+							for (int i = 0; i < newCount; i++) {
+								Critter.makeCritter(critterClassName);
+							}
+							critterTypes.add(name);
+							actionTarget.setFill(Color.FIREBRICK);
+							actionTarget.setText("Added " + Integer.toString(newCount) + " " + name + " Critters.");	
+							Critter.displayWorld(); // or Whatever
+							updateStats();
+							
+						} catch(InvalidCritterException e) {
+							actionTarget.setFill(Color.FIREBRICK);
+							actionTarget.setText("Invalid Critter!");
 						}
-						critterTypes.add(name);
-						actionTarget.setFill(Color.FIREBRICK);
-						actionTarget.setText("Added " + Integer.toString(newCount) + " " + name + " Critters.");	
-						Critter.displayWorld(); // or Whatever
-						updateStats();
-						
-					} catch(InvalidCritterException e) {
-						actionTarget.setFill(Color.FIREBRICK);
-						actionTarget.setText("Invalid Critter!");
 					}
-
 				}			
 			});
 			stepBtn.setOnAction(new EventHandler<ActionEvent>() {
