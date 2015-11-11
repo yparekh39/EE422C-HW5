@@ -1,4 +1,15 @@
 package project5;
+/* CRITTERS <MyClass.java>
+ * EE422C Project 5 submission by
+ * Matt Owens
+ * mo8755
+ * 16340
+ * Yash Parekh
+ * yjp246
+ * 16345
+ * Slip days used: 1
+ * Fall 2015
+ */
 	
 
 import java.util.HashSet;
@@ -201,26 +212,26 @@ public class Main extends Application {
 			hbResetBtn.getChildren().add(resetButton);
 			grid.add(hbResetBtn, 1, row);
 			
-			Button playSlowButton = new Button("Play Slow");
+			Button playSlowButton = new Button("Slow");
 			playSlowButton.setPrefWidth(70);
 			HBox hbPSBtn = new HBox(10);
 			hbPSBtn.setAlignment(Pos.BOTTOM_LEFT);
 			hbPSBtn.getChildren().add(playSlowButton);
-			grid.add(hbPSBtn, 0, row+1);
+			grid.add(hbPSBtn, 2, row+1);
 			
-			Button playFastButton = new Button("Play Fast");
+			Button playFastButton = new Button("Fast");
 			playFastButton.setPrefWidth(70);
 			HBox hbPFBtn = new HBox(10);
 			hbPFBtn.setAlignment(Pos.BOTTOM_LEFT);
 			hbPFBtn.getChildren().add(playFastButton);
-			grid.add(hbPFBtn, 1, row+1);
+			grid.add(hbPFBtn, 2, row+2);
 			
 			Button stopAnmtButton = new Button("Pause");
 			stopAnmtButton.setPrefWidth(70);
 			HBox hbStpAnmtBtn = new HBox(10);
 			hbStpAnmtBtn.setAlignment(Pos.BOTTOM_LEFT);
 			hbStpAnmtBtn.getChildren().add(stopAnmtButton);
-			grid.add(hbStpAnmtBtn, 2, row+1);
+			grid.add(hbStpAnmtBtn, 2, row+3);
 			
 			//grid.setGridLinesVisible(true);
 			

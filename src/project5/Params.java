@@ -1,4 +1,15 @@
 package project5;
+/* CRITTERS <MyClass.java>
+ * EE422C Project 5 submission by
+ * Matt Owens
+ * mo8755
+ * 16340
+ * Yash Parekh
+ * yjp246
+ * 16345
+ * Slip days used: 1
+ * Fall 2015
+ */
 
 public class Params {
 
@@ -15,6 +26,4 @@ public class Params {
 	
 	public static int look_energy_cost = 1;
 	
-	/* Matt's Critter size parameter*/
-
 }

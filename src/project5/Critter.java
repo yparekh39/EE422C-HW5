@@ -1,6 +1,6 @@
 package project5;
 /* CRITTERS <MyClass.java>
- * EE422C Project 4 submission by
+ * EE422C Project 5 submission by
  * Matt Owens
  * mo8755
  * 16340
