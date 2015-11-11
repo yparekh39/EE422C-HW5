@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -28,6 +30,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -47,8 +50,8 @@ public class Main extends Application {
 	static GridPane grid = new GridPane();
 	static BorderPane window = new BorderPane();
 	static int row = 0;
-	static int worldWidthGUI = 600;
-	static int worldHeightGUI = 600;
+	static int worldWidthGUI = 700;
+	static int worldHeightGUI = 700;
 	static Shape s;
 	static boolean stopTimers = true;
 	static boolean stopFast = false;
@@ -153,10 +156,23 @@ public class Main extends Application {
 			
 			
 			// Add Field for Critter type.
-			Label critName = new Label("Critter Name (e.g. Algae):");
+			Label critName = new Label("Critter Name:");
 			grid.add(critName, 0, row);
-			TextField critNameField = new TextField();
-			//row++;
+//			TextField critNameField = new TextField();
+//			//row++;
+//			grid.add(critNameField, 1, row);
+
+			ComboBox critNameField = new ComboBox();
+			ObservableList<String> critterList = FXCollections.observableArrayList(
+					"Algae", 
+					"Craig",
+					"Female",
+					"Male",
+					"Longhorn",
+					"Spider",
+					"AlgaephobicCritter",
+					"TragicCritter");
+			critNameField.setItems(critterList);
 			grid.add(critNameField, 1, row);
 			
 			// Add Field for No. of Critters
@@ -216,21 +232,21 @@ public class Main extends Application {
 			HBox hbPSBtn = new HBox(10);
 			hbPSBtn.setAlignment(Pos.BOTTOM_LEFT);
 			hbPSBtn.getChildren().add(playSlowButton);
-			grid.add(hbPSBtn, 2, row+1);
+			grid.add(hbPSBtn, 2, row+5);
 			
 			Button playFastButton = new Button("Fast");
 			playFastButton.setPrefWidth(70);
 			HBox hbPFBtn = new HBox(10);
 			hbPFBtn.setAlignment(Pos.BOTTOM_LEFT);
 			hbPFBtn.getChildren().add(playFastButton);
-			grid.add(hbPFBtn, 2, row+2);
+			grid.add(hbPFBtn, 2, row+6);
 			
 			Button stopAnmtButton = new Button("Pause");
 			stopAnmtButton.setPrefWidth(70);
 			HBox hbStpAnmtBtn = new HBox(10);
 			hbStpAnmtBtn.setAlignment(Pos.BOTTOM_LEFT);
 			hbStpAnmtBtn.getChildren().add(stopAnmtButton);
-			grid.add(hbStpAnmtBtn, 2, row+3);
+			grid.add(hbStpAnmtBtn, 2, row+7);
 			
 			//grid.setGridLinesVisible(true);
 			
@@ -243,7 +259,7 @@ public class Main extends Application {
 				@Override
 				public void handle(ActionEvent event) {
 					if(stopTimers){
-						String name = critNameField.getText();
+						String name = (String) critNameField.getValue();
 						String numString = critNumField.getText();
 						//TODO: Call Critter.makeCritter as many times as requested.
 						String critterClassName = "project5."+ name;
@@ -354,6 +370,28 @@ public class Main extends Application {
 		title.setFill(Color.FIREBRICK);
 		stats.add(title, 0, statsRow);
 		statsRow++;
+		
+		ComboBox critNameField = new ComboBox();
+		ObservableList<String> critterList = FXCollections.observableArrayList(
+				"Algae", 
+				"Craig",
+				"Female",
+				"Male",
+				"Longhorn",
+				"Spider",
+				"AlgaephobicCritter",
+				"TragicCritter");
+		critNameField.setItems(critterList);
+		stats.add(critNameField, 0, statsRow);
+		statsRow++;
+		Button statBtn = new Button("Get Stats");
+		HBox hbStatBtn = new HBox(10);
+		hbStatBtn.setAlignment(Pos.CENTER_LEFT);
+		hbStatBtn.getChildren().add(statBtn);
+		row += 2;
+		stats.add(hbStatBtn, 0, statsRow);
+		
+		statsRow++;
 		Iterator<String> iterator = critterTypes.iterator();
 		while(iterator.hasNext()) {
 			String stat;
@@ -376,6 +414,16 @@ public class Main extends Application {
 		stats.setPadding(new Insets(25, 25, 25, 25));
 		stats.setPrefWidth(300);
 		window.setRight(stats);
+		
+		statBtn.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent event) {
+				critterTypes.add((String) critNameField.getValue());
+				updateStats();
+			}
+			
+		});
 	}
 	
 	//Handles animation
@@ -393,6 +441,7 @@ public class Main extends Application {
 	        public void run() {
 	        	Platform.runLater(new Runnable() {
 	        		public void run() {
+	        			critterTypes.add("Algae");
 	        			if(stopTimers)
 	        				timer.cancel();
 	        			else if(speed.equals("fast") && stopFast)
