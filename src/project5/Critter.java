@@ -521,26 +521,29 @@ public abstract class Critter {
 			int radiusGUI = Main.worldWidthGUI/Params.world_width/2;
 			switch (c.viewShape()){
 				case SQUARE: 
-					s = new Rectangle(xGUI, yGUI, Main.worldWidthGUI/Params.world_width , Main.worldHeightGUI/Params.world_height);
+					s = new Polygon(xGUI, 				yGUI,
+									xGUI + 2*radiusGUI,  	yGUI,
+									xGUI + 2*radiusGUI,	yGUI + 2*radiusGUI,
+									xGUI,				yGUI + 2*radiusGUI);
 					break;
 				case TRIANGLE: 
 					//created in bottom left, top, bottom right order
-					s = new Polygon(xGUI, yGUI + 2*radiusGUI, xGUI + radiusGUI, yGUI, xGUI + 2*radiusGUI, yGUI + 2*radiusGUI);
+					s = new Polygon(xGUI+1, yGUI + 2*radiusGUI-1, xGUI + radiusGUI, yGUI+1, xGUI + 2*radiusGUI-1, yGUI + 2*radiusGUI-1);
 					break;
 				case DIAMOND: 
 					//created left, top, right, bottom
-					s = new Polygon(xGUI, yGUI + radiusGUI, xGUI + radiusGUI, yGUI, xGUI + 2*radiusGUI, yGUI + radiusGUI, xGUI + radiusGUI, yGUI + 2*radiusGUI);
+					s = new Polygon(xGUI+1, yGUI + radiusGUI, xGUI + radiusGUI, yGUI+1, xGUI + 2*radiusGUI-1, yGUI + radiusGUI, xGUI + radiusGUI, yGUI + 2*radiusGUI-1);
 					break;
 				case STAR:
-					s = new Polygon(xGUI, 					yGUI + .8*radiusGUI,
+					s = new Polygon(xGUI+1, 					yGUI + .8*radiusGUI,
 									xGUI + .7*radiusGUI, 	yGUI + .8*radiusGUI, 
-									xGUI + radiusGUI, 		yGUI, 
+									xGUI + radiusGUI, 		yGUI + 1, 
 									xGUI + 1.3*radiusGUI,	yGUI + .8*radiusGUI,
-									xGUI + 2*radiusGUI, 	yGUI + .8*radiusGUI,
+									xGUI + 2*radiusGUI - 1, 	yGUI + .8*radiusGUI,
 									xGUI + 1.4*radiusGUI, 	yGUI + 1.3*radiusGUI,
-									xGUI + 1.6*radiusGUI, 	yGUI + 2*radiusGUI,
+									xGUI + 1.6*radiusGUI, 	yGUI + 2*radiusGUI - 1,
 									xGUI + radiusGUI, 		yGUI + 1.6*radiusGUI,
-									xGUI + .4*radiusGUI, 	yGUI + 2*radiusGUI,
+									xGUI + .4*radiusGUI, 	yGUI + 2*radiusGUI-1,
 									xGUI + .6*radiusGUI,	yGUI + 1.3*radiusGUI);
 					break;
 				default:
