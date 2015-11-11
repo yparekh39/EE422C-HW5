@@ -44,11 +44,83 @@ public class Main extends Application {
 	static boolean stopSlow = false;
 	Animator fast_animator;
 	Animator slow_animator;
-	
+	static boolean doingSettings = true;
+
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			Stage stage = new Stage();
+			stage.setTitle("Change World Parameters");
 			
+			stage.setAlwaysOnTop(true);
+			GridPane settings = new GridPane();
+			settings.setAlignment(Pos.TOP_CENTER);
+			settings.setHgap(5);
+			settings.setVgap(5);
+			settings.setPadding(new Insets(25, 25, 25, 25));
+			
+			Label widthName = new Label("World Width:");
+			settings.add(widthName, 0, 0);
+			TextField widthField = new TextField();
+			settings.add(widthField, 2, 0);
+			
+			Label heightName = new Label("World Height:");
+			settings.add(heightName, 0, 2);
+			TextField heightField = new TextField();
+			settings.add(heightField, 2, 2);
+			
+			Label refreshName = new Label("Algae Refresh Rate:");
+			settings.add(refreshName, 0, 4);
+			TextField refreshField = new TextField();
+			settings.add(refreshField, 2, 4);
+			
+			Button settingConfirm = new Button("Update");
+			HBox hbConfirm = new HBox(10);
+			hbConfirm.setAlignment(Pos.BOTTOM_RIGHT);
+			hbConfirm.getChildren().add(settingConfirm);
+			settings.add(hbConfirm, 0, 10);
+			
+			Button cancel = new Button("Default");
+			HBox hbCancel = new HBox(10);
+			hbCancel.setAlignment(Pos.BOTTOM_LEFT);
+			hbCancel.getChildren().add(cancel);
+			settings.add(hbCancel, 1, 10);
+			
+			Scene settingScene = new Scene(settings, 500, 200);
+			stage.setScene(settingScene);
+			stage.show();
+						
+			settingConfirm.setOnAction(new EventHandler<ActionEvent>(){
+
+				@Override
+				public void handle(ActionEvent event) {
+					// TODO Auto-generated method stub
+					String width = widthField.getText();
+					String height = heightField.getText();
+					String refresh = refreshField.getText();
+					if(!width.isEmpty()) {
+						Params.world_width = Integer.parseInt(width);
+					}
+					if(!height.isEmpty()) {
+						Params.world_height = Integer.parseInt(height);
+					}
+					if(!refresh.isEmpty()) {
+						Params.refresh_algae_count = Integer.parseInt(refresh);
+					}
+					stage.close();
+				}
+				
+			});
+			
+			cancel.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle(ActionEvent event) {
+					stage.close();
+				}
+			});
+			
+		
 			primaryStage.setTitle("Java FX Critters");
 			s = new Rectangle(worldWidthGUI, worldHeightGUI);
 			s.setFill(Color.LIGHTBLUE);
