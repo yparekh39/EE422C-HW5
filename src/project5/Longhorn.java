@@ -57,7 +57,7 @@ public class Longhorn extends Critter {
 		} 
 		else{
 			for(int i = 0; i < 8; i++){
-				if(this.look(i, true).equals("B")){
+				if(look(i, true) != null && look(i, true).equals("B")){
 					return true;
 				}
 			}

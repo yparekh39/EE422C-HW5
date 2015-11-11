@@ -391,6 +391,7 @@ public class Main extends Application {
 	        			else{
 	        				Critter.worldTimeStep();
 		                    Critter.displayWorld();
+		                    updateStats();
 	        			}
 	        		}
 	        	});
