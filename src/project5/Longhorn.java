@@ -52,9 +52,19 @@ public class Longhorn extends Critter {
 	//Bevo never runs from a fight
 	@Override
 	public boolean fight(String oponent) {
-		if(identity.equals("I am Bevo"))
+		if(identity.equals("I am Bevo")){
 			return true;
+		} 
+		else{
+			for(int i = 0; i < 8; i++){
+				if(this.look(i, true).equals("B")){
+					return true;
+				}
+			}
+		}
+			
 		return false;
+		
 	}
 	
 	public String toString(){
