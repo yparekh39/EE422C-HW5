@@ -17,6 +17,7 @@ public class Spider extends Critter {
 	private int webLength;
 	private int webLengthWalked;
 	private int webPerimeterWalked;
+	private boolean onFirstLeg;
 	private String ageAppearance;
 	
 	public Spider(){
@@ -25,6 +26,7 @@ public class Spider extends Critter {
 		webLength = 1;
 		webLengthWalked = 0;
 		webPerimeterWalked = 0;
+		onFirstLeg = true;
 		ageAppearance = "X";
 	}
 	
@@ -32,11 +34,15 @@ public class Spider extends Critter {
 	@Override
 	public void doTimeStep() {
 		//GOAL: WALK IN INCREASING SQUARE SPIRAL PATTERN
+		String troubleAhead = null;
 		
 		//if entire square walked, increase length of square legs and go again
 		if(webPerimeterWalked == webLength * 4){
 			webLength++;
 			webPerimeterWalked = 0;
+			webLengthWalked = 0;
+			onFirstLeg = true;
+			lastDir = (lastDir + 2) % 8;
 		}
 			
 		//if length of square leg has been walked in current direction, change direction
@@ -44,10 +50,24 @@ public class Spider extends Critter {
 			lastDir = (lastDir + 2) % 8;
 			webLengthWalked = 0;
 		}
-		//walk, make note that we've walked one more unit of the leg
-		walk(lastDir);
-		webLengthWalked++;
-		webPerimeterWalked++;
+		//energy high enough to fight whatever is ahead?
+		if(this.getEnergy() < 10)
+			troubleAhead = this.look(lastDir, false);
+		
+		//only walk if it's safe and not low energy
+		if(troubleAhead == null){
+			//walk, make note that we've walked one more unit of the leg
+			walk(lastDir);
+			webLengthWalked++;
+			webPerimeterWalked++;
+		}
+		
+		if(webLength % 3 == 0 && onFirstLeg){
+			Spider offspring = new Spider();
+			reproduce(offspring, lastDir + 1);
+		}
+		
+		onFirstLeg = false;
 		
 		age++;
 	}

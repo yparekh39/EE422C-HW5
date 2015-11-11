@@ -3,6 +3,8 @@ package project5;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,7 +39,12 @@ public class Main extends Application {
 	static int worldWidthGUI = 600;
 	static int worldHeightGUI = 600;
 	static Shape s;
-
+	static boolean stopTimers = false;
+	static boolean stopFast = false;
+	static boolean stopSlow = false;
+	Animator fast_animator;
+	Animator slow_animator;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -122,6 +129,27 @@ public class Main extends Application {
 			hbResetBtn.getChildren().add(resetButton);
 			grid.add(hbResetBtn, 1, row);
 			
+			Button playSlowButton = new Button("Play Slow");
+			playSlowButton.setPrefWidth(70);
+			HBox hbPSBtn = new HBox(10);
+			hbPSBtn.setAlignment(Pos.BOTTOM_LEFT);
+			hbPSBtn.getChildren().add(playSlowButton);
+			grid.add(hbPSBtn, 0, row+1);
+			
+			Button playFastButton = new Button("Play Fast");
+			playFastButton.setPrefWidth(70);
+			HBox hbPFBtn = new HBox(10);
+			hbPFBtn.setAlignment(Pos.BOTTOM_LEFT);
+			hbPFBtn.getChildren().add(playFastButton);
+			grid.add(hbPFBtn, 1, row+1);
+			
+			Button stopAnmtButton = new Button("Pause");
+			stopAnmtButton.setPrefWidth(70);
+			HBox hbStpAnmtBtn = new HBox(10);
+			hbStpAnmtBtn.setAlignment(Pos.BOTTOM_LEFT);
+			hbStpAnmtBtn.getChildren().add(stopAnmtButton);
+			grid.add(hbStpAnmtBtn, 2, row+1);
+			
 			//grid.setGridLinesVisible(true);
 			
 			updateStats();
@@ -189,6 +217,37 @@ public class Main extends Application {
 				}
 				
 			});
+			//Play Fast Button
+			playFastButton.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle(ActionEvent event) {
+					stopTimers = false;
+					stopSlow = true;
+					stopFast = false;
+					fast_animator = new Animator(100, "fast");
+				}
+				
+			});
+			//Play Slow
+			playSlowButton.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle(ActionEvent event) {
+					stopTimers = false;
+					stopFast = true;
+					stopSlow = false;
+					slow_animator = new Animator(300, "slow");
+				}
+				
+			});
+			//Pause
+			stopAnmtButton.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle(ActionEvent event) {
+					stopTimers = true;
+					
+				}
+				
+			});
 
 		} catch(Exception e) {
 			e.printStackTrace();		
@@ -235,5 +294,42 @@ public class Main extends Application {
 		stats.setPrefWidth(300);
 		window.setRight(stats);
 	}
+	
+	//Handles animation
+	class Animator {
+	    Timer timer;
+	    String speed;
+
+	    public Animator(long milliseconds, String label) {
+	        timer = new Timer();
+	        speed = label;
+	        timer.schedule(new AnimateTask(), 0, milliseconds);
+		}
+	    
+	    class AnimateTask extends TimerTask {
+	        public void run() {
+	        	Platform.runLater(new Runnable() {
+	        		public void run() {
+	        			if(stopTimers)
+	        				timer.cancel();
+	        			else if(speed.equals("fast") && stopFast)
+	        				timer.cancel();
+	        			else if(speed.equals("slow") && stopSlow)
+	        				timer.cancel();
+	        			else{
+	        				Critter.worldTimeStep();
+		                    Critter.displayWorld();
+	        			}
+	        		}
+	        	});
+
+	        }
+	    }
+
+	}
 
 }
+
+
+
+
